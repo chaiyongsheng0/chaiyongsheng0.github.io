@@ -12,22 +12,40 @@
         height: 100vh;
         background-color: rgb(245, 220, 228);
         padding: 0;
+        display: none;
       }
       .swiper-container {
-        margin-top: 15px;
+        margin-top: 2vh;
         width: 100%;
-        height: 80vh;
+        height: 96vh;
       }
-      .thumbs {
-        margin-top: 15px;
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .qwer_letter {
         width: 100%;
-        height: 14vh;
+        text-align: center;
       }
-      .thumbs-slide{
-        opacity: 0.8;
+      .last_slide {
+        position: relative;
       }
-      .my-slide-thumb-active {
-        opacity: 1;
+      .operation {
+        position: absolute;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        bottom: 6vh;
+      }
+      .qwer_back {
+        margin: 0 20px !important;
+      }
+      .qwer_again {
+        margin: 0 20px !important;
+      }
+      .demonstrate {
+        display: block;
       }
     </style>
     <!-- Bootstrap CSS 文件 -->
@@ -45,64 +63,50 @@
       crossorigin="anonymous"
     />
     <!-- Swiper -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/swiper/swiper-bundle.min.css"
-    />
+    <link rel="stylesheet" href="../swiper/swiper-bundle.min.css" />
   </head>
   <body>
     <div class="container-fluid">
-      <div>
-        <div class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" style="background-color: brown;">
-              slider1
-            </div>
-            <div
-              class="swiper-slide"
-              style="background-color: rgb(42, 165, 159);"
-            >
-              slider2
-            </div>
-            <div
-              class="swiper-slide"
-              style="background-color: rgb(46, 165, 42);"
-            >
-              slider3
-            </div>
-            <div
-              class="swiper-slide"
-              style="background-color: rgb(165, 42, 144);"
-            >
-              slider3
-            </div>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div
+            class="swiper-slide"
+            style="background-color: rgb(245, 220, 228);"
+          >
+            <p class="qwer_letter">
+              1111111111111111111111111
+            </p>
           </div>
-        </div>
-        <div class="thumbs">
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide thumbs-slide"
-              style="background-color: brown; width: 25vw;"
-            >
-              slider1
-            </div>
-            <div
-              class="swiper-slide thumbs-slide"
-              style="background-color: rgb(42, 165, 159); width: 25vw;"
-            >
-              slider2
-            </div>
-            <div
-              class="swiper-slide thumbs-slide"
-              style="background-color: rgb(46, 165, 42); width: 25vw;"
-            >
-              slider3
-            </div>
-            <div
-              class="swiper-slide thumbs-slide"
-              style="background-color: rgb(165, 42, 144); width: 25vw;"
-            >
-              slider3
+          <div
+            class="swiper-slide"
+            style="background-color: rgb(245, 220, 228);"
+          >
+            <p class="qwer_letter">
+              22222222222222222
+            </p>
+          </div>
+          <div
+            class="swiper-slide"
+            style="background-color: rgb(245, 220, 228);"
+          >
+            <p class="qwer_letter">
+              333333333333333333
+            </p>
+          </div>
+          <div
+            class="swiper-slide last_slide"
+            style="background-color: rgb(245, 220, 228);"
+          >
+            <p class="qwer_letter">
+              444444444444444444
+            </p>
+            <div class="operation">
+              <button class="mdui-btn mdui-btn-raised mdui-ripple qwer_back">
+                BACK
+              </button>
+              <button class="mdui-btn mdui-btn-raised mdui-ripple qwer_again">
+                AGAIN
+              </button>
             </div>
           </div>
         </div>
@@ -124,25 +128,29 @@
     crossorigin="anonymous"
   ></script>
   <!-- Swiper -->
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="../swiper/swiper-bundle.min.js"></script>
   <script>
-    let thumbsSwiper = new Swiper(".thumbs", {
-      spaceBetween: 10,
-      slidesPerView: 4,
-      watchSlidesVisibility: true, //防止不可点击
-      swiper: {
-        el: ".swiper-container-thumbs",
-      },
-    });
+    let container_fluid = document.querySelector(".container-fluid");
+    let strUrl = new RegExp("/letter.html");
+    if (strUrl.test(window.location)) {
+      let username = sessionStorage.getItem("username");
+      if (username !== "123") {
+        window.location = "../index.html";
+      } else {
+        container_fluid.classList.add("demonstrate");
+      }
+    }
+    let qwer_back = document.querySelector(".qwer_back");
+    let qwer_again = document.querySelector(".qwer_again");
     let mySwiper = new Swiper(".swiper-container", {
-      autoplay: true, //可选选项，自动滑动
-      loop: true,
       spaceBetween: 10,
-      thumbs: {
-        swiper: thumbsSwiper,
-        slideThumbActiveClass: "my-slide-thumb-active",
-        thumbsContainerClass: "my-container-thumbs",
-      },
+      effect: "fade",
     });
+    qwer_again.onclick = function (e) {
+      mySwiper.slideTo(0, 1000, false); //切换到第一个slide，速度为1秒
+    };
+    qwer_back.onclick = function (e) {
+      window.location = "./picture.html";
+    };
   </script>
 </html>
